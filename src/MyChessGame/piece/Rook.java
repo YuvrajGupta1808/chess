@@ -1,36 +1,43 @@
 package MyChessGame.piece;
 
-import MyChessGame.board.Board;
-import MyChessGame.board.Square;
-
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
 
-    public Rook(int color, Square initSq, String img_file) {
-        super(color, initSq, img_file);
+    public Rook(int color, int row, int col, String imagePath) {
+        super(color, row, col, imagePath);
     }
 
     @Override
-    public List<Square> getLegalMoves(Board b) {
-        LinkedList<Square> legalMoves = new LinkedList<Square>();
-        Square[][] board = b.getSquareArray();
-
-        int x = this.getPosition().getXNum();
-        int y = this.getPosition().getYNum();
-
-        int[] occups = getLinearOccupations(board, x, y);
-
-        for (int i = occups[0]; i <= occups[1]; i++) {
-            if (i != y) legalMoves.add(board[i][x]);
+    public boolean isValidMove(Piece[][] board, int newRow, int newCol) {
+        if (newRow != row && newCol != col) {
+            return false; // Rook moves in straight lines
         }
+        int rowDirection = Integer.compare(newRow, row);
+        int colDirection = Integer.compare(newCol, col);
 
-        for (int i = occups[2]; i <= occups[3]; i++) {
-            if (i != x) legalMoves.add(board[y][i]);
+        int r = row + rowDirection;
+        int c = col + colDirection;
+        while (r != newRow || c != newCol) {
+            if (board[r][c] != null) {
+                return false; // Path is blocked
+            }
+            r += rowDirection;
+            c += colDirection;
         }
-
-        return legalMoves;
+        return board[newRow][newCol] == null || board[newRow][newCol].getColor() != color;
     }
 
+    @Override
+    public List<int[]> getPossibleMoves() {
+        List<int[]> moves = new ArrayList<>();
+        for (int i = 1; i < 8; i++) {
+            moves.add(new int[]{row + i, col});
+            moves.add(new int[]{row - i, col});
+            moves.add(new int[]{row, col + i});
+            moves.add(new int[]{row, col - i});
+        }
+        return moves;
+    }
 }

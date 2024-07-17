@@ -1,22 +1,43 @@
 package MyChessGame.piece;
 
-import MyChessGame.board.Board;
-import MyChessGame.board.Square;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
 
-    public Bishop(int color, Square initSq, String img_file) {
-        super(color, initSq, img_file);
+    public Bishop(int color, int row, int col, String imagePath) {
+        super(color, row, col, imagePath);
     }
 
     @Override
-    public List<Square> getLegalMoves(Board b) {
-        Square[][] board = b.getSquareArray();
-        int x = this.getPosition().getXNum();
-        int y = this.getPosition().getYNum();
+    public boolean isValidMove(Piece[][] board, int newRow, int newCol) {
+        if (Math.abs(newRow - row) != Math.abs(newCol - col)) {
+            return false; // Bishop moves diagonally
+        }
+        int rowDirection = Integer.compare(newRow, row);
+        int colDirection = Integer.compare(newCol, col);
 
-        return getDiagonalOccupations(board, x, y);
+        int r = row + rowDirection;
+        int c = col + colDirection;
+        while (r != newRow && c != newCol) {
+            if (board[r][c] != null) {
+                return false; // Path is blocked
+            }
+            r += rowDirection;
+            c += colDirection;
+        }
+        return board[newRow][newCol] == null || board[newRow][newCol].getColor() != color;
+    }
+
+    @Override
+    public List<int[]> getPossibleMoves() {
+        List<int[]> moves = new ArrayList<>();
+        for (int i = 1; i < 8; i++) {
+            moves.add(new int[]{row + i, col + i});
+            moves.add(new int[]{row + i, col - i});
+            moves.add(new int[]{row - i, col + i});
+            moves.add(new int[]{row - i, col - i});
+        }
+        return moves;
     }
 }

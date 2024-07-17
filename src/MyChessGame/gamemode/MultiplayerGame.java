@@ -1,7 +1,6 @@
 package MyChessGame.gamemode;
 
 import MyChessGame.ChessGame;
-import MyChessGame.startpage.GameWindow;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -164,8 +163,11 @@ public class MultiplayerGame extends JPanel {
     }
 
     private void startGame(String player1Name, String player2Name, String selectedTime) {
-        new GameWindow(player1Name, player2Name, 0, 0, Integer.parseInt(selectedTime.split(" ")[0]));
+        int timeInSeconds = Integer.parseInt(selectedTime.split(" ")[0]) * 60; // Convert minutes to seconds
+        launcher.setFrame("game");
+        launcher.getGameMode().initializeGame();
     }
+
 
     private JLabel createImageLabel(String imagePath) {
         JLabel label = new JLabel();

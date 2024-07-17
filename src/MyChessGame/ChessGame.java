@@ -1,8 +1,6 @@
 package MyChessGame;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
 
@@ -32,7 +30,6 @@ public class ChessGame {
         JPanel startPanel = new StartPage(this);
         JPanel multiplayerGame = new MultiplayerGame(this);
         this.gamePanel = new GameMode(this);
-        this.gamePanel.initializeGame();
         JPanel endPanel = new EndPage(this);
         cl = new CardLayout();
         this.mainPanel.setLayout(cl);
@@ -92,6 +89,10 @@ public class ChessGame {
         }
         this.cl.show(mainPanel, type);
         this.jf.setVisible(true);
+    }
+
+    public GameMode getGameMode() {
+        return gamePanel;
     }
 
     public JFrame getJf() {
