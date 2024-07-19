@@ -20,14 +20,13 @@ public class Knight extends Piece {
     @Override
     public List<int[]> getPossibleMoves() {
         List<int[]> moves = new ArrayList<>();
-        moves.add(new int[]{row + 2, col + 1});
-        moves.add(new int[]{row + 2, col - 1});
-        moves.add(new int[]{row - 2, col + 1});
-        moves.add(new int[]{row - 2, col - 1});
-        moves.add(new int[]{row + 1, col + 2});
-        moves.add(new int[]{row + 1, col - 2});
-        moves.add(new int[]{row - 1, col + 2});
-        moves.add(new int[]{row - 1, col - 2});
+        int[][] knightMoves = {
+                {row + 2, col + 1}, {row + 2, col - 1}, {row - 2, col + 1}, {row - 2, col - 1},
+                {row + 1, col + 2}, {row + 1, col - 2}, {row - 1, col + 2}, {row - 1, col - 2}
+        };
+        for (int[] move : knightMoves) {
+            moves.add(move);
+        }
         return moves;
     }
 }

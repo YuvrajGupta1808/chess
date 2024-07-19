@@ -23,9 +23,13 @@ public class Pawn extends Piece {
     @Override
     public List<int[]> getPossibleMoves() {
         List<int[]> moves = new ArrayList<>();
-        moves.add(new int[]{row - 1, col});
-        moves.add(new int[]{row - 1, col - 1});
-        moves.add(new int[]{row - 1, col + 1});
+        int direction = (color == 0) ? 1 : -1;
+        moves.add(new int[]{row + direction, col});
+        moves.add(new int[]{row + direction, col - 1});
+        moves.add(new int[]{row + direction, col + 1});
+        if (color == 0 && row == 1 || color == 1 && row == 6) {
+            moves.add(new int[]{row + 2 * direction, col});
+        }
         return moves;
     }
 }

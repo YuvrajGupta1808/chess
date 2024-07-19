@@ -1,6 +1,7 @@
 package MyChessGame.gamemode;
 
 import MyChessGame.board.Clock;
+import MyChessGame.board.Mouse;
 import MyChessGame.board.Move;
 import MyChessGame.piece.*;
 import MyChessGame.ChessGame;
@@ -27,7 +28,7 @@ public class GameMode extends JPanel implements Runnable {
     private JLabel whiteTimeLabel;
     private JLabel blackTimeLabel;
 
-
+    Mouse mouse = new Mouse();
     private Piece selectedPiece;
     private int selectedRow;
     private int selectedCol;
@@ -38,6 +39,7 @@ public class GameMode extends JPanel implements Runnable {
     public GameMode(ChessGame launcher) {
         this.launcher = launcher;
         setLayout(new BorderLayout());
+
     }
 
     public void initializeGame() {
@@ -49,7 +51,6 @@ public class GameMode extends JPanel implements Runnable {
         infoPanel.add(createInfoPanel("Player 1", "images/nopic.png", true,false), BorderLayout.NORTH);
         infoPanel.add(createInfoPanel("Player 2", "images/nopic.png", true,true), BorderLayout.SOUTH);
         infoPanel.add(createTimePanel(), BorderLayout.CENTER);
-
         moveLogic = new Move(board); // Initialize moveLogic
         add(boardPanel, BorderLayout.CENTER);
         add(infoPanel, BorderLayout.EAST);
@@ -105,6 +106,8 @@ public class GameMode extends JPanel implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        addMouseMotionListener(mouse);
+        addMouseListener(mouse);
     }
 
     private Piece createPiece(String gameItem, int col, int row) {
@@ -134,37 +137,30 @@ public class GameMode extends JPanel implements Runnable {
         } else {
             square.setBackground(new Color(139, 69, 19));
         }
-        square.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                selectPiece(row, col);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                movePiece(row, col);
-            }
-        });
         return square;
     }
 
-    private void selectPiece(int row, int col) {
-        selectedPiece = board[row][col];
-        selectedRow = row;
-        selectedCol = col;
-    }
-
-    private void movePiece(int row, int col) {
+    private void update() {
         if (selectedPiece != null) {
-            if (moveLogic.isValidMove(selectedRow, selectedCol, row, col)) {
-                moveLogic.makeMove(selectedRow, selectedCol, row, col);
+            if (whiteTurn && selectedPiece.getColor() == 0) {
+                // If it's white's turn, and the selected piece is black, deselect it
                 selectedPiece = null;
-                whiteTurn = !whiteTurn;
-            } else {
+            } else if (!whiteTurn && selectedPiece.getColor() == 1) {
+                // If it's black's turn, and the selected piece is white, deselect it
                 selectedPiece = null;
             }
         }
+        else{
+            simulate();
+        }
     }
+
+    private void simulate() {
+        if (selectedPiece != null) {
+            selectedPiece.setPosition(selectedRow - 50, selectedCol-50); // Adjust the position to center the piece under the cursor
+        }
+    }
+
 
     private JPanel createInfoPanel(String text, String imagePath, boolean isPlayer, boolean isWhite) {
         JPanel panel = new JPanel();
@@ -251,6 +247,7 @@ public class GameMode extends JPanel implements Runnable {
             }
         }
     }
+
 
 
 }

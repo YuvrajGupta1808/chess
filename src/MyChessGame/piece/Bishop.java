@@ -11,22 +11,17 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isValidMove(Piece[][] board, int newRow, int newCol) {
-        if (Math.abs(newRow - row) != Math.abs(newCol - col)) {
-            return false; // Bishop moves diagonally
-        }
-        int rowDirection = Integer.compare(newRow, row);
-        int colDirection = Integer.compare(newCol, col);
-
-        int r = row + rowDirection;
-        int c = col + colDirection;
-        while (r != newRow && c != newCol) {
-            if (board[r][c] != null) {
-                return false; // Path is blocked
+        if (Math.abs(newRow - row) == Math.abs(newCol - col)) {
+            int rowDirection = Integer.compare(newRow, row);
+            int colDirection = Integer.compare(newCol, col);
+            for (int i = 1; i < Math.abs(newRow - row); i++) {
+                if (board[row + i * rowDirection][col + i * colDirection] != null) {
+                    return false;
+                }
             }
-            r += rowDirection;
-            c += colDirection;
+            return board[newRow][newCol] == null || board[newRow][newCol].getColor() != color;
         }
-        return board[newRow][newCol] == null || board[newRow][newCol].getColor() != color;
+        return false;
     }
 
     @Override
