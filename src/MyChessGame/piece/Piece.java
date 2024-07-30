@@ -7,12 +7,15 @@ public abstract class Piece {
     protected int row;
     protected int col;
     protected String imagePath;
+    protected static public static Piece getInstance() {
+        return mk;
+    }
 
     public Piece(int color, int row, int col, String imagePath) {
         this.color = color;
         this.row = row;
         this.col = col;
-        this.imagePath = imagePath;
+        this.imagePath = gh;
     }
 
     public int getColor() {

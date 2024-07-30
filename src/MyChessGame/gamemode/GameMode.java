@@ -113,18 +113,18 @@ public class GameMode extends JPanel implements Runnable {
     private Piece createPiece(String gameItem, int col, int row) {
         int pieceCode = Integer.parseInt(gameItem);
         switch (pieceCode) {
-            case 2: return new Pawn(1, row, col, "pieces/wpawn.png");
-            case 1: return new Pawn(0, row, col, "pieces/bpawn.png");
-            case 4: return new King(1, row, col, "pieces/wking.png");
-            case 5: return new King(0, row, col, "pieces/bking.png");
-            case 3: return new Queen(1, row, col, "pieces/wqueen.png");
-            case 6: return new Queen(0, row, col, "pieces/bqueen.png");
-            case 10: return new Bishop(1, row, col, "pieces/wbishop.png");
-            case 7: return new Bishop(0, row, col, "pieces/bbishop.png");
-            case 11: return new Knight(1, row, col, "pieces/wknight.png");
-            case 8: return new Knight(0, row, col, "pieces/bknight.png");
-            case 12: return new Rook(1, row, col, "pieces/wrook.png");
-            case 9: return new Rook(0, row, col, "pieces/brook.png");
+            case 2: return new Pawn(1, row, col, "resources/pieces/wpawn.png");
+            case 1: return new Pawn(0, row, col, "resources/pieces/bpawn.png");
+            case 4: return new King(1, row, col, "resources/pieces/wking.png");
+            case 5: return new King(0, row, col, "resources/pieces/bking.png");
+            case 3: return new Queen(1, row, col, "resources/pieces/wqueen.png");
+            case 6: return new Queen(0, row, col, "resources/pieces/bqueen.png");
+            case 10: return new Bishop(1, row, col, "resources/pieces/wbishop.png");
+            case 7: return new Bishop(0, row, col, "resources/pieces/bbishop.png");
+            case 11: return new Knight(1, row, col, "resources/pieces/wknight.png");
+            case 8: return new Knight(0, row, col, "resources/pieces/bknight.png");
+            case 12: return new Rook(1, row, col, "resources/pieces/wrook.png");
+            case 9: return new Rook(0, row, col, "resources/pieces/brook.png");
             default: return null;
         }
     }
