@@ -196,14 +196,14 @@ public class VariantsMenuPanel extends JPanel {
 
             // Hide time labels and second player options if AI mode
             if (GamePanel.isAI) {
-                System.out.println("AI Mode is enabled");
+                //System.out.println("AI Mode is enabled");
                 time5Min.setVisible(false);
                 time10Min.setVisible(false);
                 time15Min.setVisible(false);
                 changeAvatar2.setVisible(false);
                 changeGender2.setVisible(false);
             } else {
-                System.out.println("AI Mode is disabled");
+                //System.out.println("AI Mode is disabled");
             }
 
             // Set default avatars
@@ -259,7 +259,7 @@ public class VariantsMenuPanel extends JPanel {
 
     private void handleTimeSelection(int minutes) {
         selectedTime = minutes;
-        System.out.println("Game Time: " + selectedTime);
+        //System.out.println("Game Time: " + selectedTime);
     }
 
     private void handleStartGame() {

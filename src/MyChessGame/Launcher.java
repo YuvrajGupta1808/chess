@@ -41,9 +41,9 @@ public class Launcher {
     }
 
     public void startGame(String player1, String player2, String path1, String path2, int gameTime) {
-        System.out.println("Starting game with players: " + player1 + " and " + player2);
-        System.out.println("Avatars: " + path1 + " and " + path2);
-        System.out.println("Game time: " + gameTime + " minutes");
+        //System.out.println("Starting game with players: " + player1 + " and " + player2);
+        //System.out.println("Avatars: " + path1 + " and " + path2);
+        //System.out.println("Game time: " + gameTime + " minutes");
 
         gamePanel.initialize(player1, player2, path1, path2, gameTime);
         setFrame("game");

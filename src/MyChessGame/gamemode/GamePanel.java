@@ -55,8 +55,8 @@ public class GamePanel extends JPanel {
     private Stockfish stockfish;
     private EvaluationBar evaluationBar;
     public boolean rotate = false;
-    private Color lightColor = Color.WHITE;
-    private Color darkColor = Color.GRAY;
+    private Color lightColor = new Color(222,184,135);
+    private Color darkColor = new Color(139, 69, 19);
     private JFXPanel fxPanel;
     private Launcher launcher;
 
@@ -196,19 +196,21 @@ public class GamePanel extends JPanel {
             player1Time = (Label) loader.getNamespace().get("player1Time");
             player2Time = (Label) loader.getNamespace().get("player2Time");
 
-            if (isAI) {
-                player1Time.setVisible(false);
-                player2Time.setVisible(false);
-            }
-
             themeComboBox = (ComboBox<String>) loader.getNamespace().get("themeComboBox");
             rotateButton = (javafx.scene.control.Button) loader.getNamespace().get("rotateButton");
             evalButton = (javafx.scene.control.Button) loader.getNamespace().get("evalButton");
             evaluationBarContainer = (StackPane) loader.getNamespace().get("evaluationBarContainer");
 
+            ImageView rotateImageView = (ImageView) loader.getNamespace().get("rotateImageView");
+            rotateImageView.setImage(new Image(getClass().getResourceAsStream("/images/rotate.png")));
+
             SwingNode swingNode = new SwingNode();
-            Platform.runLater(() -> swingNode.setContent(evaluationBar));
-            evaluationBarContainer.getChildren().add(swingNode);
+            Platform.runLater(() -> {
+                swingNode.setContent(evaluationBar);
+                evaluationBarContainer.getChildren().clear();  // Clear any previous content
+                evaluationBarContainer.getChildren().add(swingNode);
+                StackPane.setAlignment(swingNode, javafx.geometry.Pos.CENTER);  // Center the SwingNode within the StackPane
+            });
 
             if (player1NameLabel != null) {
                 player1NameLabel.setText(player1);
@@ -227,11 +229,6 @@ public class GamePanel extends JPanel {
                 player2Pic.setImage(new Image(player2Avatar));
             }
 
-            if (isAI) {
-                player1Time.setVisible(false);
-                player2Time.setVisible(false);
-            }
-
             themeComboBox.setOnAction(e -> changeTheme(themeComboBox.getValue()));
             rotateButton.setOnAction(e -> rotateBoard());
             evalButton.setOnAction(e -> toggleEvaluation());
@@ -248,6 +245,21 @@ public class GamePanel extends JPanel {
             e.printStackTrace();
         }
     }
+
+    private void toggleEvaluation() {
+        if (evaluationBar != null) {
+            boolean currentlyVisible = evaluationBar.isVisible();
+            evaluationBar.setVisible(!currentlyVisible);  // Toggle visibility
+            evaluationBar.toggleEvalOnOff(!currentlyVisible);  // Update evalOn state in the evaluation bar
+            evalButton.setText(currentlyVisible ? "Eval On" : "Eval Off");
+            //System.out.println("Evaluation toggled: " + (!currentlyVisible ? "ON" : "OFF"));
+            //System.out.println("Evaluation bar currently visible: " + evaluationBar.isVisible());
+            //System.out.println("Eval Button text set to: " + evalButton.getText());
+        }
+    }
+
+
+
 
     private void makeAIMove() {
         String fen = getFenFromBoard();
@@ -298,17 +310,11 @@ public class GamePanel extends JPanel {
                 darkColor = Color.GREEN.darker();
                 break;
             default:
-                lightColor = new Color(222, 184, 135);
-                darkColor = new Color(139, 69, 19);
+                lightColor = Color.WHITE;
+                darkColor = Color.GRAY;
                 break;
         }
         repaint();
-    }
-
-    private void toggleEvaluation() {
-        if (evaluationBar != null) {
-            evaluationBar.setVisible(!evaluationBar.isVisible());
-        }
     }
 
     private void rotateBoard() {
@@ -583,6 +589,10 @@ public class GamePanel extends JPanel {
                         updateEvaluation();
                     }
 
+                    if (isrookswitch||isamazon||isChess960){
+                        rotateBoard();
+                    }
+
                 } else {
                     board[selectedPiece.y][selectedPiece.x] = selectedPieceType;
                 }
@@ -635,7 +645,7 @@ public class GamePanel extends JPanel {
     }
 
     private void showEndPage(String result) {
-        System.out.println("Game over: " + result);
+        //System.out.println("Game over: " + result);
         rightBottomContainer.removeAll();
 
         JPanel endPanel = new JPanel(new BorderLayout());
@@ -688,7 +698,7 @@ public class GamePanel extends JPanel {
 
 
     private void resetGameState() {
-        System.out.println("Resetting game state...");
+        //System.out.println("Resetting game state...");
 
         // Reset board and piece variables
         board = null;
@@ -932,7 +942,11 @@ public class GamePanel extends JPanel {
     }
 
     private void getResultMessage() {
-        if (gameState.isCheckmate(whiteTurn)) {
+        if (player1TimeRemaining <= 0) {
+            showEndPage("Black wins by timeout!");
+        } else if (player2TimeRemaining <= 0) {
+            showEndPage("White wins by timeout!");
+        } else if (gameState.isCheckmate(whiteTurn)) {
             showEndPage((whiteTurn ? "Black" : "White") + " wins by checkmate!");
         }else if (gameState.isCheckmate(!whiteTurn)) {
             showEndPage((whiteTurn ? "Black" : "White") + " wins by checkmate!");

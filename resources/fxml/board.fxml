@@ -12,18 +12,20 @@
 
 <HBox xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" prefWidth="244" prefHeight="820" spacing="10" alignment="CENTER">
 
-    <StackPane fx:id="evaluationBarContainer" prefWidth="40" />
-
-    <VBox fx:id="rightPane" prefWidth="204" prefHeight="820" spacing="10" alignment="CENTER">
+    <VBox fx:id="rightPane" prefWidth="204" prefHeight="820" spacing="20" alignment="CENTER">
 
         <!-- Rotate and Eval Buttons at the Top -->
         <HBox spacing="10" alignment="CENTER">
-            <Button fx:id="rotateButton" text="Rotate Board" styleClass="button" />
-            <Button fx:id="evalButton" text="Turn on Evaluation" styleClass="button" />
+            <Button fx:id="rotateButton" styleClass="button">
+                <graphic>
+                    <ImageView fx:id="rotateImageView" fitWidth="24" fitHeight="24" />
+                </graphic>
+            </Button>
+            <Button fx:id="evalButton" text="Eval" styleClass="button" />
         </HBox>
 
         <!-- Theme Selection Dropdown -->
-        <ComboBox fx:id="themeComboBox" promptText="Select Theme" styleClass="combo-box">
+        <ComboBox fx:id="themeComboBox" promptText="Theme" styleClass="combo-box">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Classic" />
@@ -35,18 +37,19 @@
 
         <!-- Player 2 Info -->
         <HBox spacing="10" alignment="CENTER">
-            <Label fx:id="player2NameLabel" text="Player 1" styleClass="label" />
+            <Label fx:id="player2NameLabel" text="Player 2" styleClass="label" />
             <ImageView fx:id="player2Pic" fitWidth="40" fitHeight="40" styleClass="image-view" />
         </HBox>
-        <Label fx:id="player2Time" text="10:00" styleClass="label" />
+        <Label fx:id="player2Time" text="10:00" styleClass="label" alignment="CENTER"/>
 
         <!-- Player 1 Info -->
-        <Label fx:id="player1Time" text="10:00" styleClass="label" />
+        <Label fx:id="player1Time" text="10:00" styleClass="label" alignment="CENTER"/>
         <HBox spacing="10" alignment="CENTER">
-            <Label fx:id="player1NameLabel" text="Player 2" styleClass="label" />
+            <Label fx:id="player1NameLabel" text="Player 1" styleClass="label" />
             <ImageView fx:id="player1Pic" fitWidth="40" fitHeight="40" styleClass="image-view" />
         </HBox>
-
     </VBox>
+
+    <StackPane fx:id="evaluationBarContainer" prefWidth="40" style="-fx-background-color: black;" alignment="CENTER"/>
 
 </HBox>

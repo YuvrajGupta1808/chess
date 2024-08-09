@@ -76,7 +76,7 @@ public class King extends Piece {
                 if (piece != null && piece.isWhite() == byWhite) {
                     boolean canMove = piece.canMove(r, c, row, col, board);
                     if (canMove) {
-                        System.out.println(piece.getClass().getSimpleName() + " at (" + r + ", " + c + ") can attack square (" + row + ", " + col + ")");
+                        //System.out.println(piece.getClass().getSimpleName() + " at (" + r + ", " + c + ") can attack square (" + row + ", " + col + ")");
                         return true;
                     }
                 }
