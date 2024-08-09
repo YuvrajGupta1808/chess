@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_LEFT" hgap="40" vgap="20">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <VBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <HBox spacing="10" alignment="CENTER">
+            <ImageView fx:id="avatar1" fitHeight="120" fitWidth="120" />
+            <VBox alignment="CENTER">
+                <Button text="+" fx:id="changeAvatar1" />
+                <Button text="⇄" fx:id="changeGender1" />
+            </VBox>
+        </HBox>
+        <TextField fx:id="player1Name" promptText="Player 1" />
+        <HBox spacing="10" alignment="CENTER">
+            <ImageView fx:id="whitePawn" fitHeight="80" fitWidth="50" />
+        </HBox>
+    </VBox>
+
+    <VBox spacing="20" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <HBox spacing="10" alignment="CENTER">
+            <ImageView fx:id="avatar2" fitHeight="120" fitWidth="120" />
+            <VBox alignment="CENTER">
+                <Button text="+" fx:id="changeAvatar2" />
+                <Button text="⇄" fx:id="changeGender2" />
+            </VBox>
+        </HBox>
+        <TextField fx:id="player2Name" promptText="Player 2" />
+        <HBox spacing="10" alignment="CENTER">
+            <ImageView fx:id="blackPawn" fitHeight="80" fitWidth="50" />
+        </HBox>
+    </VBox>
+
+    <VBox spacing="20" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" alignment="CENTER">
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="5 min" fx:id="time5Min" />
+            <Button text="10 min" fx:id="time10Min" />
+            <Button text="15 min" fx:id="time15Min" />
+        </HBox>
+        <HBox alignment="CENTER">
+            <Button text="Start Game" fx:id="startGame" />
+        </HBox>
+    </VBox>
+</GridPane>
